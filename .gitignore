@@ -1,0 +1,44 @@
+# Bytecode dan cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+.env/
+*.venv
+
+# Model dan dataset besar
+*.onnx
+*.pt
+*.pth
+datasets/
+
+# File konfigurasi dan kredensial
+config.json
+config.yaml
+credentials.json
+
+# Log dan output
+logs/
+*.log
+*.csv
+*.sqlite3
+
+# File sementara
+.DS_Store
+Thumbs.db
+
+# PyQt5 build files
+*.qrc
+*.ui
+
+# Binary files
+*.exe
+*.dll
+*.so
+*.dylib
+build/
+dist/
+*.spec
