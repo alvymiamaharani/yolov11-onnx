@@ -13,7 +13,7 @@ class YOLOv8RTSPApp(QMainWindow):
         super().__init__()
 
         # Initialize the YOLOv8 object detector
-        self.model_path = "/Users/sabdadeveloper/sabdahtb/yolo-py/yolo-onnx/model/yolov11.onnx"
+        self.model_path = "./model/best-480.onnx"
         self.yolov8_detector = YoloONNX(self.model_path, conf_thres=0.7, iou_thres=0.7)
 
         # Initialize RTSP stream

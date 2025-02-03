@@ -1,9 +1,11 @@
-# YOLOv11 ONNX Detection
+# YOLOv8 ONNX Detection
 
-This project implements YOLOv11 object detection using ONNX with support for image, video, webcam, and RTSP stream processing. It also includes a PyQt5 GUI for a more interactive experience.
+This project implements YOLOv8 object detection using ONNX with support for image, video, webcam, and RTSP stream processing. It also includes a PyQt5 GUI for a more interactive experience.
+
+_Compatible with YOLOv11 too_
 
 ## Features
-- Object detection using YOLOv11 ONNX model
+- Object detection using YOLOv8 ONNX model
 - Supports image, video, webcam, and RTSP streams
 - Optimized bounding box visualization
 - PyQt5 GUI for better user experience

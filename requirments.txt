@@ -2,3 +2,5 @@ opencv-python
 onnxruntime
 PyQt5
 pyinstaller
+PyGObject
+py-machineid
