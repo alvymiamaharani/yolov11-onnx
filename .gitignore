@@ -10,7 +10,7 @@ venv/
 *.venv
 
 # Model dan dataset besar
-*.onnx
+# *.onnx
 *.pt
 *.pth
 datasets/
