@@ -1,7 +1,8 @@
+from gi.repository import Gst, GstRtspServer, GObject
 import gi
 gi.require_version('Gst', '1.0')
 gi.require_version('GstRtspServer', '1.0')
-from gi.repository import Gst, GstRtspServer, GObject
+
 
 class RTSPMediaFactory(GstRtspServer.RTSPMediaFactory):
     def __init__(self, video_path):
@@ -16,6 +17,7 @@ class RTSPMediaFactory(GstRtspServer.RTSPMediaFactory):
         )
         return Gst.parse_launch(pipeline)
 
+
 class RTSPServer:
     def __init__(self, video_path):
         Gst.init(None)
@@ -28,6 +30,7 @@ class RTSPServer:
     def run(self):
         loop = GObject.MainLoop()
         loop.run()
+
 
 if __name__ == "__main__":
     video_path = "./video-test-2.mp4"

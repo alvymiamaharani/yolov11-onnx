@@ -13,8 +13,9 @@ class YOLOv8RTSPApp(QMainWindow):
         super().__init__()
 
         # Initialize the YOLOv8 object detector
-        self.model_path = "./model/best-480.onnx"
-        self.yolov8_detector = YoloONNX(self.model_path, conf_thres=0.7, iou_thres=0.7)
+        self.model_path = "./model/best-240.onnx"
+        self.yolov8_detector = YoloONNX(
+            self.model_path, conf_thres=0.7, iou_thres=0.7)
 
         # Initialize RTSP stream
         self.rtsp_url = "rtsp://127.0.0.1:8554/live"  # Replace with your RTSP URL
@@ -27,7 +28,7 @@ class YOLOv8RTSPApp(QMainWindow):
         # Create a label to display the video
         self.video_label = QLabel(self)
         self.video_label.setAlignment(Qt.AlignCenter)
-        
+
         # Create a layout and set it for the main window
         layout = QVBoxLayout()
         layout.addWidget(self.video_label)
@@ -49,7 +50,7 @@ class YOLOv8RTSPApp(QMainWindow):
 
         # Detect objects
         boxes, scores, class_ids = self.yolov8_detector(frame)
-        
+
         # Draw detections on the frame
         combined_img = self.yolov8_detector.draw_detections(frame)
 
@@ -59,7 +60,8 @@ class YOLOv8RTSPApp(QMainWindow):
         # Convert frame to QImage for PyQt5
         height, width, channel = combined_img.shape
         bytes_per_line = 3 * width
-        q_img = QImage(combined_img.data, width, height, bytes_per_line, QImage.Format_RGB888)
+        q_img = QImage(combined_img.data, width, height,
+                       bytes_per_line, QImage.Format_RGB888)
 
         # Convert QImage to QPixmap and display it on the label
         self.video_label.setPixmap(QPixmap.fromImage(q_img))

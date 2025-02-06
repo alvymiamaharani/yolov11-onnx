@@ -3,7 +3,7 @@ from YoloONNX import YoloONNX
 
 # Path gambar dan model
 img_path = "./images/testing.png"
-model_path = "./model/best-480.onnx"
+model_path = "./model/best-240.onnx"
 
 # Inisialisasi model YoloONNX
 yolo = YoloONNX(model_path, conf_thres=0.7, iou_thres=0.7)

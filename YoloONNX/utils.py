@@ -2,7 +2,8 @@ import cv2
 import numpy as np
 
 # Daftar nama kelas (sesuaikan dengan model yang digunakan)
-class_names = ['holding_stairs', 'not_holding_stairs']
+class_names = ['Holding stairs', 'Not holding stairs']
+
 
 def xywh2xyxy(boxes: np.ndarray) -> np.ndarray:
     """
@@ -33,10 +34,12 @@ def draw_detections(image, boxes, scores, class_ids, mask_alpha=0.3):
         draw_box(det_img, box, color)
 
         label = class_names[class_id]
-        caption = f'{label.replace("_", " ")} {int(score * 100)}%'  # Replacing underscore with space
-        draw_text(det_img, caption.capitalize(), box, color, font_size, text_thickness)
+        # Replacing underscore with space
+        caption = f'{label} {int(score * 100)}%'
+        draw_text(det_img, caption, box, color, font_size, text_thickness)
 
     return det_img
+
 
 def draw_box(image: np.ndarray, box: np.ndarray, color: tuple[int, int, int] = (255, 255, 255),
              thickness: int = 2) -> np.ndarray:
@@ -47,16 +50,17 @@ def draw_box(image: np.ndarray, box: np.ndarray, color: tuple[int, int, int] = (
     return cv2.rectangle(image, (x1, y1), (x2, y2), color, thickness)
 
 
-def draw_text(image: np.ndarray, text: str, box: np.ndarray, color: tuple[int, int, int], 
+def draw_text(image: np.ndarray, text: str, box: np.ndarray, color: tuple[int, int, int],
               font_size: float, thickness: int) -> None:
     """
     Draws text above the bounding box.
     """
     x1, y1, _, _ = box.astype(int)
-    text_size = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, font_size, thickness)[0]
+    text_size = cv2.getTextSize(
+        text, cv2.FONT_HERSHEY_SIMPLEX, font_size, thickness)[0]
     text_x, text_y = x1, y1 - 10
 
-    cv2.putText(image, text, (text_x, max(text_y, 20)), 
+    cv2.putText(image, text, (text_x, max(text_y, 20)),
                 cv2.FONT_HERSHEY_SIMPLEX, font_size, color, thickness, cv2.LINE_AA)
 
 
@@ -75,7 +79,8 @@ def multiclass_nms(boxes, scores, class_ids, iou_threshold):
         cls_boxes = boxes[cls_indices]
         cls_scores = scores[cls_indices]
 
-        indices = cv2.dnn.NMSBoxes(cls_boxes.tolist(), cls_scores.tolist(), 0.0, iou_threshold)
+        indices = cv2.dnn.NMSBoxes(
+            cls_boxes.tolist(), cls_scores.tolist(), 0.0, iou_threshold)
         if len(indices) > 0:
             keep_indices.extend(cls_indices[indices.flatten()])
 
