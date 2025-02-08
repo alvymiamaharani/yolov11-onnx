@@ -6,13 +6,22 @@ from YoloONNX.utils import xywh2xyxy, draw_detections, multiclass_nms
 
 
 class YoloONNX:
-    def __init__(self, model_path, conf_thres=0.7, iou_thres=0.5):
+    def __init__(self, model_path, conf_thres=0.7, iou_thres=0.5, intra_op_threads=2, inter_op_threads=2):
         self.conf_threshold = conf_thres
         self.iou_threshold = iou_thres
 
-        # Load ONNX model
+        # Set up session options for thread management
+        self.sess_opt = onnxruntime.SessionOptions()
+        self.sess_opt.intra_op_num_threads = intra_op_threads  # Set intra-op threads
+        self.sess_opt.inter_op_num_threads = inter_op_threads  # Set inter-op threads
+        # Enable parallel execution mode
+        self.sess_opt.execution_mode = onnxruntime.ExecutionMode.ORT_PARALLEL
+
+        # Load ONNX model with session options
         self.session = onnxruntime.InferenceSession(
-            model_path, providers=onnxruntime.get_available_providers())
+            model_path, sess_options=self.sess_opt, providers=onnxruntime.get_available_providers())
+
+        # Get model details (inputs and outputs)
         self.get_model_details()
 
     def __call__(self, image):

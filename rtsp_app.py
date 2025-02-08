@@ -15,7 +15,7 @@ class YOLOv8RTSPApp(QMainWindow):
         # Initialize the YOLOv8 object detector
         self.model_path = "./model/best-240.onnx"
         self.yolov8_detector = YoloONNX(
-            self.model_path, conf_thres=0.7, iou_thres=0.7)
+            self.model_path, conf_thres=0.7, iou_thres=0.7, intra_op_threads=2, inter_op_threads=2)
 
         # Initialize RTSP stream
         self.rtsp_url = "rtsp://127.0.0.1:8554/live"  # Replace with your RTSP URL
