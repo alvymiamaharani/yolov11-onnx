@@ -33,6 +33,6 @@ class RTSPServer:
 
 
 if __name__ == "__main__":
-    video_path = "./video-test-2.mp4"
+    video_path = "videos/video-test-2.mp4"
     server = RTSPServer(video_path)
     server.run()

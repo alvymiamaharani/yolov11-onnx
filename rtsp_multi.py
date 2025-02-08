@@ -38,7 +38,7 @@ class YOLOv8RTSPApp(QMainWindow):
         layout = QGridLayout()
         layout.addWidget(self.video_labels[0], 0, 0)
         layout.addWidget(self.video_labels[1], 0, 1)
-        # Full width at bottom
+        # Full width for the third video
         layout.addWidget(self.video_labels[2], 1, 0, 1, 2)
 
         container = QWidget(self)
@@ -51,6 +51,9 @@ class YOLOv8RTSPApp(QMainWindow):
         self.timer.start(20)
 
     def update_frames(self):
+        target_width = 640
+        target_height = int(target_width * 9 / 16)
+
         for i, cap in enumerate(self.caps):
             ret, frame = cap.read()
             if not ret:
@@ -66,8 +69,6 @@ class YOLOv8RTSPApp(QMainWindow):
             combined_img = cv2.cvtColor(combined_img, cv2.COLOR_BGR2RGB)
 
             # Resize frame to 16:9 aspect ratio
-            target_width = 640
-            target_height = int(target_width * 9 / 16)
             combined_img = cv2.resize(
                 combined_img, (target_width, target_height))
 

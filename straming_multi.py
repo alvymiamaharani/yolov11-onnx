@@ -20,18 +20,21 @@ class RTSPMediaFactory(GstRtspServer.RTSPMediaFactory):
 
 
 class RTSPServer:
-    def __init__(self, video_path, paths):
+    def __init__(self, video_paths, paths):
         Gst.init(None)
         self.server = GstRtspServer.RTSPServer()
         self.server.set_service("8554")  # Menggunakan satu port
 
-        for path in paths:
-            factory = RTSPMediaFactory(video_path)
-            self.server.get_mount_points().add_factory(path, factory)
+        # Menambahkan beberapa video sumber ke server
+        for i, path in enumerate(paths):
+            if i < len(video_paths):
+                # Menggunakan video dari video_paths
+                factory = RTSPMediaFactory(video_paths[i])
+                self.server.get_mount_points().add_factory(path, factory)
+                print(
+                    f"Path {path} tersedia di rtsp://127.0.0.1:8554{path} menggunakan {video_paths[i]}")
 
         self.server.attach(None)
-        for path in paths:
-            print(f"RTSP Server running at rtsp://127.0.0.1:8554{path}")
 
     def run(self):
         loop = GObject.MainLoop()
@@ -39,7 +42,12 @@ class RTSPServer:
 
 
 if __name__ == "__main__":
-    video_path = "./video-test-2.mp4"
+    video_paths = [
+        "videos/video-test-1.mp4",  # Video sumber 1
+        "videos/video-test-2.mp4",  # Video sumber 2
+        "videos/video-test-3.mp4"   # Video sumber 3
+    ]
+
     paths = ["/live1", "/live2", "/live3"]  # List path yang ingin digunakan
-    server = RTSPServer(video_path, paths)
+    server = RTSPServer(video_paths, paths)
     server.run()
